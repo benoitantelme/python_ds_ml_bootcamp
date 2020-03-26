@@ -7,7 +7,9 @@
 # ___
 # # Python Crash Course Exercises 
 # 
-# This is an optional exercise to test your understanding of Python Basics. If you find this extremely challenging, then you probably are not ready for the rest of this course yet and don't have enough programming experience to continue. I would suggest you take another course more geared towards complete beginners, such as [Complete Python Bootcamp](https://www.udemy.com/complete-python-bootcamp/?couponCode=PY20)
+# This is an optional exercise to test your understanding of Python Basics. If you find this extremely challenging, then you probably are not ready for the rest
+# of this course yet and don't have enough programming experience to continue. I would suggest you take another course more geared towards complete beginners,
+# such as [Complete Python Bootcamp](https://www.udemy.com/complete-python-bootcamp/?couponCode=PY20)
 
 # ## Exercises
 # 
@@ -17,9 +19,7 @@
 
 # In[1]:
 
-
-
-
+print(7 ** 4)
 
 # ** Split this string:**
 # 
@@ -29,14 +29,9 @@
 
 # In[4]:
 
-
-
-
+print(str.split("Hi there Sam!"))
 
 # In[3]:
-
-
-
 
 
 # ** Given the variables:**
@@ -53,12 +48,9 @@
 
 planet = "Earth"
 diameter = 12742
-
+print("The diameter of {} is {} kilometers.".format(planet, diameter))
 
 # In[6]:
-
-
-
 
 
 # ** Given this nested list, use indexing to grab the word "hello" **
@@ -66,13 +58,11 @@ diameter = 12742
 # In[7]:
 
 
-lst = [1,2,[3,4],[5,[100,200,['hello']],23,11],1,7]
+lst = [1, 2, [3, 4], [5, [100, 200, ['hello']], 23, 11], 1, 7]
 
+print(lst[3][1][2])
 
 # In[14]:
-
-
-
 
 
 # ** Given this nested dictionary grab the word "hello". Be prepared, this will be annoying/tricky **
@@ -80,13 +70,11 @@ lst = [1,2,[3,4],[5,[100,200,['hello']],23,11],1,7]
 # In[16]:
 
 
-d = {'k1':[1,2,3,{'tricky':['oh','man','inception',{'target':[1,2,3,'hello']}]}]}
-
+d = {'k1': [1, 2, 3, {'tricky': ['oh', 'man', 'inception', {'target': [1, 2, 3, 'hello']}]}]}
 
 # In[22]:
 
-
-
+print(d['k1'][3]['tricky'][3]['target'][3])
 
 
 # ** What is the main difference between a tuple and a list? **
@@ -106,27 +94,28 @@ d = {'k1':[1,2,3,{'tricky':['oh','man','inception',{'target':[1,2,3,'hello']}]}]
 # In[24]:
 
 
-
-
-
 # In[26]:
 
+def domainGet(address):
+    return address.split("@")[1]
 
-domainGet('user@domain.com')
+
+print(domainGet('user@domain.com'))
 
 
-# ** Create a basic function that returns True if the word 'dog' is contained in the input string. Don't worry about edge cases like a punctuation being attached to the word dog, but do account for capitalization. **
+# ** Create a basic function that returns True if the word 'dog' is contained in the input string. Don't worry about edge cases like a punctuation being
+# attached to the word dog, but do account for capitalization. **
 
 # In[27]:
 
 
-
-
-
 # In[28]:
 
+def findDog(s):
+    return "dog" in s
 
-findDog('Is there a dog here?')
+
+print(findDog('Is there a dog here?'))
 
 
 # ** Create a function that counts the number of times the word "dog" occurs in a string. Again ignore edge cases. **
@@ -134,14 +123,13 @@ findDog('Is there a dog here?')
 # In[30]:
 
 
-
-
-
 # In[31]:
 
+def countDog(s):
+    return s.count('dog')
 
-countDog('This dog runs faster than the other dog dude!')
 
+print(countDog('This dog runs faster than the other dog dude!'))
 
 # ** Use lambda expressions and the filter() function to filter out words from a list that don't start with the letter 's'. For example:**
 # 
@@ -154,39 +142,43 @@ countDog('This dog runs faster than the other dog dude!')
 # In[34]:
 
 
-seq = ['soup','dog','salad','cat','great']
+seq = ['soup', 'dog', 'salad', 'cat', 'great']
+
+a = list(filter(lambda s: str.startswith(s, 's'), seq))
+print(a)
 
 
 # In[35]:
-
-
-
 
 
 # ### Final Problem
 # **You are driving a little too fast, and a police officer stops you. Write a function
 #   to return one of 3 possible results: "No ticket", "Small ticket", or "Big Ticket". 
 #   If your speed is 60 or less, the result is "No Ticket". If speed is between 61 
-#   and 80 inclusive, the result is "Small Ticket". If speed is 81 or more, the result is "Big    Ticket". Unless it is your birthday (encoded as a boolean value in the parameters of the function) -- on your birthday, your speed can be 5 higher in all 
+#   and 80 inclusive, the result is "Small Ticket". If speed is 81 or more, the result is "Big    Ticket". Unless it is your birthday
+#   (encoded as a boolean value in the parameters of the function) -- on your birthday, your speed can be 5 higher in all
 #   cases. **
 
 # In[36]:
 
 
 def caught_speeding(speed, is_birthday):
-    pass
+    if speed < 61 or (is_birthday and speed < 66):
+        return "No Ticket"
+    elif speed < 81 or (is_birthday and speed < 86):
+        return "Small Ticket"
+    else:
+        return "Big Ticket"
 
 
 # In[42]:
 
 
-caught_speeding(81,True)
-
+print(caught_speeding(81, True))
 
 # In[43]:
 
 
-caught_speeding(81,False)
-
+print(caught_speeding(81, False))
 
 # # Great job!
