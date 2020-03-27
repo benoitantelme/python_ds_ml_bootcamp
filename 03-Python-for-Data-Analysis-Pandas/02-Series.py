@@ -19,7 +19,6 @@
 import numpy as np
 import pandas as pd
 
-
 # ### Creating a Series
 # 
 # You can convert a list,numpy array, or dictionary to a Series:
@@ -27,11 +26,10 @@ import pandas as pd
 # In[3]:
 
 
-labels = ['a','b','c']
-my_list = [10,20,30]
-arr = np.array([10,20,30])
-d = {'a':10,'b':20,'c':30}
-
+labels = ['a', 'b', 'c']
+my_list = [10, 20, 30]
+arr = np.array([10, 20, 30])
+d = {'a': 10, 'b': 20, 'c': 30}
 
 # ** Using Lists**
 
@@ -40,18 +38,15 @@ d = {'a':10,'b':20,'c':30}
 
 pd.Series(data=my_list)
 
-
 # In[5]:
 
 
-pd.Series(data=my_list,index=labels)
-
+pd.Series(data=my_list, index=labels)
 
 # In[6]:
 
 
-pd.Series(my_list,labels)
-
+pd.Series(my_list, labels)
 
 # ** NumPy Arrays **
 
@@ -60,12 +55,10 @@ pd.Series(my_list,labels)
 
 pd.Series(arr)
 
-
 # In[8]:
 
 
-pd.Series(arr,labels)
-
+pd.Series(arr, labels)
 
 # ** Dictionary**
 
@@ -73,7 +66,6 @@ pd.Series(arr,labels)
 
 
 pd.Series(d)
-
 
 # ### Data in a Series
 # 
@@ -84,13 +76,11 @@ pd.Series(d)
 
 pd.Series(data=labels)
 
-
 # In[11]:
 
 
 # Even functions (although unlikely that you will use this)
-pd.Series([sum,print,len])
-
+pd.Series([sum, print, len])
 
 # ## Using an Index
 # 
@@ -101,32 +91,27 @@ pd.Series([sum,print,len])
 # In[12]:
 
 
-ser1 = pd.Series([1,2,3,4],index = ['USA', 'Germany','USSR', 'Japan'])                                   
-
+ser1 = pd.Series([1, 2, 3, 4], index=['USA', 'Germany', 'USSR', 'Japan'])
 
 # In[13]:
 
 
 ser1
 
-
 # In[14]:
 
 
-ser2 = pd.Series([1,2,5,4],index = ['USA', 'Germany','Italy', 'Japan'])                                   
-
+ser2 = pd.Series([1, 2, 5, 4], index=['USA', 'Germany', 'Italy', 'Japan'])
 
 # In[15]:
 
 
 ser2
 
-
 # In[16]:
 
 
 ser1['USA']
-
 
 # Operations are then also done based off of index:
 
@@ -134,7 +119,6 @@ ser1['USA']
 
 
 ser1 + ser2
-
 
 # Let's stop here for now and move on to DataFrames, which will expand on the concept of Series!
 # # Great Job!

@@ -8,7 +8,8 @@
 
 # # Data Input and Output
 # 
-# This notebook is the reference code for getting input and output, pandas can read a variety of file types using its pd.read_ methods. Let's take a look at the most common data types:
+# This notebook is the reference code for getting input and output, pandas can read a variety of file types using its pd.read_ methods.
+# Let's take a look at the most common data types:
 
 # In[1]:
 

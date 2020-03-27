@@ -165,6 +165,7 @@ print(np.std(mat))
 # #### Get the sum of all the columns in mat
 
 # In[53]:
-print(np.sum(mat, axis=0))
+print(mat.sum(axis=0))
+mat.sum(axis=0)
 
 # # Great Job!
