@@ -31,7 +31,6 @@
 
 import numpy as np
 
-
 # Numpy has many built-in functions and capabilities. We won't cover them all but instead we will focus on some of the most important aspects of Numpy: vectors,arrays,matrices, and number generation. Let's start by discussing arrays.
 # 
 # # Numpy Arrays
@@ -49,28 +48,24 @@ import numpy as np
 # In[19]:
 
 
-my_list = [1,2,3]
+my_list = [1, 2, 3]
 my_list
-
 
 # In[16]:
 
 
 np.array(my_list)
 
-
 # In[20]:
 
 
-my_matrix = [[1,2,3],[4,5,6],[7,8,9]]
+my_matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 my_matrix
-
 
 # In[21]:
 
 
 np.array(my_matrix)
-
 
 # ## Built-in Methods
 # 
@@ -83,14 +78,12 @@ np.array(my_matrix)
 # In[22]:
 
 
-np.arange(0,10)
-
+np.arange(0, 10)
 
 # In[23]:
 
 
-np.arange(0,11,2)
-
+np.arange(0, 11, 2)
 
 # ### zeros and ones
 # 
@@ -101,24 +94,20 @@ np.arange(0,11,2)
 
 np.zeros(3)
 
-
 # In[26]:
 
 
-np.zeros((5,5))
-
+np.zeros((5, 5))
 
 # In[27]:
 
 
 np.ones(3)
 
-
 # In[28]:
 
 
-np.ones((3,3))
-
+np.ones((3, 3))
 
 # ### linspace
 # Return evenly spaced numbers over a specified interval.
@@ -126,14 +115,12 @@ np.ones((3,3))
 # In[29]:
 
 
-np.linspace(0,10,3)
-
+np.linspace(0, 10, 3)
 
 # In[31]:
 
 
-np.linspace(0,10,50)
-
+np.linspace(0, 10, 50)
 
 # ## eye
 # 
@@ -144,8 +131,7 @@ np.linspace(0,10,50)
 
 np.eye(4)
 
-
-# ## Random 
+# ## Random
 # 
 # Numpy also has lots of ways to create random number arrays:
 # 
@@ -159,12 +145,10 @@ np.eye(4)
 
 np.random.rand(2)
 
-
 # In[46]:
 
 
-np.random.rand(5,5)
-
+np.random.rand(5, 5)
 
 # ### randn
 # 
@@ -175,12 +159,10 @@ np.random.rand(5,5)
 
 np.random.randn(2)
 
-
 # In[45]:
 
 
-np.random.randn(5,5)
-
+np.random.randn(5, 5)
 
 # ### randint
 # Return random integers from `low` (inclusive) to `high` (exclusive).
@@ -188,14 +170,12 @@ np.random.randn(5,5)
 # In[50]:
 
 
-np.random.randint(1,100)
-
+np.random.randint(1, 100)
 
 # In[51]:
 
 
-np.random.randint(1,100,10)
-
+np.random.randint(1, 100, 10)
 
 # ## Array Attributes and Methods
 # 
@@ -205,20 +185,17 @@ np.random.randint(1,100,10)
 
 
 arr = np.arange(25)
-ranarr = np.random.randint(0,50,10)
-
+ranarr = np.random.randint(0, 50, 10)
 
 # In[56]:
 
 
 arr
 
-
 # In[57]:
 
 
 ranarr
-
 
 # ## Reshape
 # Returns an array containing the same data with a new shape.
@@ -226,8 +203,7 @@ ranarr
 # In[54]:
 
 
-arr.reshape(5,5)
-
+arr.reshape(5, 5)
 
 # ### max,min,argmax,argmin
 # 
@@ -238,30 +214,25 @@ arr.reshape(5,5)
 
 ranarr
 
-
 # In[61]:
 
 
 ranarr.max()
-
 
 # In[62]:
 
 
 ranarr.argmax()
 
-
 # In[63]:
 
 
 ranarr.min()
 
-
 # In[60]:
 
 
 ranarr.argmin()
-
 
 # ## Shape
 # 
@@ -273,31 +244,26 @@ ranarr.argmin()
 # Vector
 arr.shape
 
-
 # In[66]:
 
 
 # Notice the two sets of brackets
-arr.reshape(1,25)
-
+arr.reshape(1, 25)
 
 # In[69]:
 
 
-arr.reshape(1,25).shape
-
+arr.reshape(1, 25).shape
 
 # In[70]:
 
 
-arr.reshape(25,1)
-
+arr.reshape(25, 1)
 
 # In[76]:
 
 
-arr.reshape(25,1).shape
-
+arr.reshape(25, 1).shape
 
 # ### dtype
 # 
@@ -307,6 +273,5 @@ arr.reshape(25,1).shape
 
 
 arr.dtype
-
 
 # # Great Job!
