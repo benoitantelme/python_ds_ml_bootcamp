@@ -23,18 +23,18 @@
 
 
 import numpy as np
-x = np.arange(0,100)
-y = x*2
-z = x**2
 
+x = np.arange(0, 100)
+y = x * 2
+z = x ** 2
 
-# ** Import matplotlib.pyplot as plt and set %matplotlib inline if you are using the jupyter notebook. What command do you use if you aren't using the jupyter notebook?**
+# ** Import matplotlib.pyplot as plt and set %matplotlib inline if you are using the jupyter notebook. What command
+# do you use if you aren't using the jupyter notebook?**
 
 # In[3]:
 
 
-
-
+import matplotlib.pyplot as plt
 
 # ## Exercise 1
 # 
@@ -45,43 +45,48 @@ z = x**2
 
 # In[4]:
 
-
-
-
+fig = plt.figure()
+ax = fig.add_axes([0.1, 0.1, 0.8, 0.8])  # left, bottom, width, height (range 0 to 1)
+ax.plot(x, y)
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_title('title')
 
 # ## Exercise 2
-# ** Create a figure object and put two axes on it, ax1 and ax2. Located at [0,0,1,1] and [0.2,0.5,.2,.2] respectively.**
+# ** Create a figure object and put two axes on it, ax1 and ax2. Located at [0,0,1,1] and [0.2,0.5,.2,.2]
+# respectively.**
 
 # In[39]:
 
-
-
-
+fig2 = plt.figure()
+ax21 = fig2.add_axes([0.1, 0.1, 0.8, 0.8])  # left, bottom, width, height (range 0 to 1)
+ax22 = fig2.add_axes([0.2, 0.5, .2, .2])
 
 # ** Now plot (x,y) on both axes. And call your figure object to show it.**
 
 # In[42]:
-
-
-
-
+ax21.plot(x, y)
+ax22.plot(x, y)
 
 # ## Exercise 3
 # 
 # ** Create the plot below by adding two axes to a figure object at [0,0,1,1] and [0.2,0.5,.4,.4]**
 
 # In[6]:
-
-
-
-
+fig3 = plt.figure()
+ax31 = fig3.add_axes([0.1, 0.1, 0.9, 0.9])  # left, bottom, width, height (range 0 to 1)
+ax32 = fig3.add_axes([0.17, 0.5, .4, .4])
 
 # ** Now use x,y, and z arrays to recreate the plot below. Notice the xlimits and y limits on the inserted plot:**
 
 # In[5]:
-
-
-
+ax31.plot(x, z)
+ax31.set_xlabel('x')
+ax31.set_ylabel('z')
+ax32.plot(x, y)
+ax32.set_xlabel('x')
+ax32.set_ylabel('y')
+ax32.set_title('zoom')
 
 
 # ## Exercise 4
@@ -89,25 +94,27 @@ z = x**2
 # ** Use plt.subplots(nrows=1, ncols=2) to create the plot below.**
 
 # In[48]:
-
-
-
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(12,2))
 
 
 # ** Now plot (x,y) and (x,z) on the axes. Play around with the linewidth and style**
 
 # In[51]:
+axes[0].plot(x, y, 'g')
+axes[0].set_xlabel('x')
+axes[0].set_ylabel('y')
+axes[0].set_title('plot 1')
 
+axes[1].plot(x, z, 'r')
+axes[1].set_xlabel('x')
+axes[1].set_ylabel('z')
+axes[1].set_title('plot 2')
+plt.show()
 
-
-
-
-# ** See if you can resize the plot by adding the figsize() argument in plt.subplots() are copying and pasting your previous code.**
+# ** See if you can resize the plot by adding the figsize() argument in plt.subplots() are copying and pasting your
+# previous code.**
 
 # In[32]:
-
-
-
 
 
 # # Great Job!
