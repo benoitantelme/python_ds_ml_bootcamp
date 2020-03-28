@@ -21,9 +21,9 @@
 
 # In[2]:
 
-
+import matplotlib.pyplot as plt
 import seaborn as sns
-get_ipython().run_line_magic('matplotlib', 'inline')
+# get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # ## Data
@@ -49,6 +49,7 @@ tips.head()
 
 
 sns.distplot(tips['total_bill'])
+plt.show()
 # Safe to ignore warnings
 
 
