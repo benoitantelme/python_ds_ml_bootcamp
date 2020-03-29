@@ -7,7 +7,8 @@
 # ___
 # # Pandas Built-in Data Visualization
 # 
-# In this lecture we will learn about pandas built-in capabilities for data visualization! It's built-off of matplotlib, but it baked into pandas for easier usage!  
+# In this lecture we will learn about pandas built-in capabilities for data visualization! It's built-off of
+# matplotlib, but it baked into pandas for easier usage!
 # 
 # Let's take a look!
 
@@ -18,7 +19,7 @@
 
 import numpy as np
 import pandas as pd
-get_ipython().run_line_magic('matplotlib', 'inline')
+# get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # ## The Data
@@ -34,7 +35,11 @@ df2 = pd.read_csv('df2')
 
 # ## Style Sheets
 # 
-# Matplotlib has [style sheets](http://matplotlib.org/gallery.html#style_sheets) you can use to make your plots look a little nicer. These style sheets include plot_bmh,plot_fivethirtyeight,plot_ggplot and more. They basically create a set of style rules that your plots follow. I recommend using them, they make all your plots have the same look and feel more professional. You can even create your own if you want your company's plots to all have the same look (it is a bit tedious to create on though).
+# Matplotlib has [style sheets](http://matplotlib.org/gallery.html#style_sheets) you can use to make your plots look a
+# little nicer. These style sheets include plot_bmh,plot_fivethirtyeight,plot_ggplot and more. They basically create a
+# set of style rules that your plots follow. I recommend using them, they make all your plots have the same look and
+# feel more professional. You can even create your own if you want your company's plots to all have the same look (it
+# is a bit tedious to create on though).
 # 
 # Here is how to use them.
 # 
