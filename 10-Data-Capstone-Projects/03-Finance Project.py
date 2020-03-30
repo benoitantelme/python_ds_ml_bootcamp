@@ -8,11 +8,17 @@
 
 # # Finance Data Project 
 # 
-# In this data project we will focus on exploratory data analysis of stock prices. Keep in mind, this project is just meant to practice your visualization and pandas skills, it is not meant to be a robust financial analysis or be taken as financial advice.
+# In this data project we will focus on exploratory data analysis of stock prices. Keep in mind, this project is just
+# meant to practice your visualization and pandas skills, it is not meant to be a robust financial analysis or be taken
+# as financial advice.
 # ____
-# ** NOTE: This project is extremely challenging because it will introduce a lot of new concepts and have you looking things up on your own (we'll point you in the right direction) to try to solve the tasks issued. Feel free to just go through the solutions lecture notebook and video as a "walkthrough" project if you don't want to have to look things up yourself. You'll still learn a lot that way! **
+# ** NOTE: This project is extremely challenging because it will introduce a lot of new concepts and have you looking
+# things up on your own (we'll point you in the right direction) to try to solve the tasks issued. Feel free to just go
+# through the solutions lecture notebook and video as a "walkthrough" project if you don't want to have to look things
+# up yourself. You'll still learn a lot that way! **
 # ____
-# We'll focus on bank stocks and see how they progressed throughout the [financial crisis](https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%9308) all the way to early 2016.
+# We'll focus on bank stocks and see how they progressed throughout the [financial crisis]
+# (https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%9308) all the way to early 2016.
 
 # ## Get the Data
 # 
@@ -20,7 +26,10 @@
 # 
 # First we need to start with the proper imports, which we've already laid out for you here.
 # 
-# *Note: [You'll need to install pandas-datareader for this to work!](https://github.com/pydata/pandas-datareader) Pandas datareader allows you to [read stock information directly from the internet](http://pandas.pydata.org/pandas-docs/stable/remote_data.html) Use these links for install guidance (**pip install pandas-datareader**), or just follow along with the video lecture.*
+# *Note: [You'll need to install pandas-datareader for this to work!](https://github.com/pydata/pandas-datareader)
+# Pandas datareader allows you to [read stock information directly from the internet]
+# (http://pandas.pydata.org/pandas-docs/stable/remote_data.html) Use these links for install guidance
+# (**pip install pandas-datareader**), or just follow along with the video lecture.*
 # 
 # ### The Imports
 # 
@@ -33,8 +42,9 @@ from pandas_datareader import data, wb
 import pandas as pd
 import numpy as np
 import datetime
-get_ipython().run_line_magic('matplotlib', 'inline')
+import os
 
+# get_ipython().run_line_magic('matplotlib', 'inline')
 
 # ## Data
 # 
@@ -46,12 +56,15 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # * Morgan Stanley
 # * Wells Fargo
 # 
-# ** Figure out how to get the stock data from Jan 1st 2006 to Jan 1st 2016 for each of these banks. Set each bank to be a separate dataframe, with the variable name for that bank being its ticker symbol. This will involve a few steps:**
+# ** Figure out how to get the stock data from Jan 1st 2006 to Jan 1st 2016 for each of these banks. Set each bank to
+# be a separate dataframe, with the variable name for that bank being its ticker symbol. This will involve a few
+# steps:**
 # 1. Use datetime to set start and end datetime objects.
 # 2. Figure out the ticker symbol for each bank.
 # 2. Figure out how to use datareader to grab info on the stock.
 # 
-# ** Use [this documentation page](https://pandas-datareader.readthedocs.io/en/latest/remote_data.html) for hints and instructions (it should just be a matter of replacing certain values. Use google finance as a source, for example:**
+# ** Use [this documentation page](https://pandas-datareader.readthedocs.io/en/latest/remote_data.html) for hints and
+# instructions (it should just be a matter of replacing certain values. Use google finance as a source, for example:**
 #     
 #     # Bank of America
 #     BAC = data.DataReader("BAC", 'google', start, end)
@@ -61,21 +74,45 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # ### We also provide pickle file in the article lecture right before the video lectures.
 
 # In[5]:
+start = datetime.datetime(2006, 1, 1)
+end = datetime.datetime(2016, 1, 1)
 
+# Bank of America
+# BAC = data.DataReader("BAC", 'yahoo', start, end)
+# BAC.to_csv(r'bac.csv', header=True)
+BAC = pd.read_csv('bac.csv')
+print(BAC.head())
 
+# CitiGroup
+# C = data.DataReader("C", 'yahoo', start, end)
+# C.to_csv(r'c.csv', header=True)
+C = pd.read_csv('c.csv')
 
+# Goldman Sachs
+# GS = data.DataReader("GS", 'yahoo', start, end)
+# GS.to_csv(r'gs.csv', header=True)
+GS = pd.read_csv('gs.csv')
+
+# JPMorgan Chase
+# JPM = data.DataReader("JPM", 'yahoo', start, end)
+# JPM.to_csv(r'jpm.csv', header=True)
+JPM = pd.read_csv('jpm.csv')
+
+# Morgan Stanley
+# MS = data.DataReader("MS", 'yahoo', start, end)
+# MS.to_csv(r'ms.csv', header=True)
+MS = pd.read_csv('ms.csv')
+
+# Wells Fargo
+# WFC = data.DataReader("WFC", 'yahoo', start, end)
+# WFC.to_csv(r'wfc.csv', header=True)
+WFC = pd.read_csv('wfc.csv')
 
 
 # In[6]:
 
 
-
-
-
 # In[50]:
-
-
-
 
 
 # ** Create a list of the ticker symbols (as strings) in alphabetical order. Call this list: tickers**
@@ -83,15 +120,9 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # In[7]:
 
 
-
-
-
 # ** Use pd.concat to concatenate the bank dataframes together to a single data frame called bank_stocks. Set the keys argument equal to the tickers list. Also pay attention to what axis you concatenate on.**
 
 # In[8]:
-
-
-
 
 
 # ** Set the column name levels (this is filled out for you):**
@@ -99,15 +130,12 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # In[9]:
 
 
-bank_stocks.columns.names = ['Bank Ticker','Stock Info']
+# bank_stocks.columns.names = ['Bank Ticker','Stock Info']
 
 
 # ** Check the head of the bank_stocks dataframe.**
 
 # In[20]:
-
-
-
 
 
 # # EDA
@@ -120,9 +148,6 @@ bank_stocks.columns.names = ['Bank Ticker','Stock Info']
 # In[58]:
 
 
-
-
-
 # ** Create a new empty DataFrame called returns. This dataframe will contain the returns for each bank's stock. returns are typically defined by:**
 # 
 # $$r_t = \frac{p_t - p_{t-1}}{p_{t-1}} = \frac{p_t}{p_{t-1}} - 1$$
@@ -130,23 +155,14 @@ bank_stocks.columns.names = ['Bank Ticker','Stock Info']
 # In[60]:
 
 
-
-
-
 # ** We can use pandas pct_change() method on the Close column to create a column representing this return value. Create a for loop that goes and for each Bank Stock Ticker creates this returns column and set's it as a column in the returns DataFrame.**
 
 # In[65]:
 
 
-
-
-
 # ** Create a pairplot using seaborn of the returns dataframe. What stock stands out to you? Can you figure out why?**
 
 # In[68]:
-
-
-
 
 
 # * See solution for details about Citigroup behavior....
@@ -156,9 +172,6 @@ bank_stocks.columns.names = ['Bank Ticker','Stock Info']
 # In[75]:
 
 
-
-
-
 # ** You should have noticed that Citigroup's largest drop and biggest gain were very close to one another, did anythign significant happen in that time frame? **
 
 # * See Solution for details
@@ -166,21 +179,12 @@ bank_stocks.columns.names = ['Bank Ticker','Stock Info']
 # In[76]:
 
 
-
-
-
 # ** Take a look at the standard deviation of the returns, which stock would you classify as the riskiest over the entire time period? Which would you classify as the riskiest for the year 2015?**
 
 # In[81]:
 
 
-
-
-
 # In[88]:
-
-
-
 
 
 # ** Create a distplot using seaborn of the 2015 returns for Morgan Stanley **
@@ -188,15 +192,9 @@ bank_stocks.columns.names = ['Bank Ticker','Stock Info']
 # In[94]:
 
 
-
-
-
 # ** Create a distplot using seaborn of the 2008 returns for CitiGroup **
 
 # In[98]:
-
-
-
 
 
 # ____
@@ -211,33 +209,25 @@ bank_stocks.columns.names = ['Bank Ticker','Stock Info']
 
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 sns.set_style('whitegrid')
-get_ipython().run_line_magic('matplotlib', 'inline')
+# get_ipython().run_line_magic('matplotlib', 'inline')
 
 # Optional Plotly Method Imports
 import plotly
 import cufflinks as cf
-cf.go_offline()
 
+cf.go_offline()
 
 # ** Create a line plot showing Close price for each bank for the entire index of time. (Hint: Try using a for loop, or use [.xs](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.xs.html) to get a cross section of the data.)**
 
 # In[17]:
 
 
-
-
-
 # In[18]:
 
 
-
-
-
 # In[19]:
-
-
-
 
 
 # ## Moving Averages
@@ -249,15 +239,9 @@ cf.go_offline()
 # In[141]:
 
 
-
-
-
 # ** Create a heatmap of the correlation between the stocks Close Price.**
 
 # In[41]:
-
-
-
 
 
 # ** Optional: Use seaborn's clustermap to cluster the correlations together:**
@@ -265,13 +249,7 @@ cf.go_offline()
 # In[26]:
 
 
-
-
-
 # In[42]:
-
-
-
 
 
 # # Part 2 (Optional)
@@ -283,23 +261,14 @@ cf.go_offline()
 # In[125]:
 
 
-
-
-
 # ** Use .ta_plot(study='sma') to create a Simple Moving Averages plot of Morgan Stanley for the year 2015.**
 
 # In[126]:
 
 
-
-
-
 # **Use .ta_plot(study='boll') to create a Bollinger Band Plot for Bank of America for the year 2015.**
 
 # In[135]:
-
-
-
 
 
 # # Great Job!
