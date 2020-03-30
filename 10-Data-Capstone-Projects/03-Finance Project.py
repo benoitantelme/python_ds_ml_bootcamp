@@ -42,7 +42,8 @@ from pandas_datareader import data, wb
 import pandas as pd
 import numpy as np
 import datetime
-import os
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # get_ipython().run_line_magic('matplotlib', 'inline')
 
@@ -108,7 +109,6 @@ MS = pd.read_csv('ms.csv')
 # WFC.to_csv(r'wfc.csv', header=True)
 WFC = pd.read_csv('wfc.csv')
 
-
 # In[6]:
 
 
@@ -118,52 +118,65 @@ WFC = pd.read_csv('wfc.csv')
 # ** Create a list of the ticker symbols (as strings) in alphabetical order. Call this list: tickers**
 
 # In[7]:
+tickers = "BAC C GS JPM MS WFC".split()
+print(tickers)
 
-
-# ** Use pd.concat to concatenate the bank dataframes together to a single data frame called bank_stocks. Set the keys argument equal to the tickers list. Also pay attention to what axis you concatenate on.**
+# ** Use pd.concat to concatenate the bank dataframes together to a single data frame called bank_stocks. Set the keys
+# argument equal to the tickers list. Also pay attention to what axis you concatenate on.**
 
 # In[8]:
-
+bank_stocks = pd.concat([BAC, C, GS, JPM, MS, WFC], axis=1, keys=tickers)
 
 # ** Set the column name levels (this is filled out for you):**
 
 # In[9]:
 
 
-# bank_stocks.columns.names = ['Bank Ticker','Stock Info']
-
+bank_stocks.columns.names = ['Bank Ticker', 'Stock Info']
 
 # ** Check the head of the bank_stocks dataframe.**
 
 # In[20]:
-
+print(bank_stocks.head())
 
 # # EDA
 # 
-# Let's explore the data a bit! Before continuing, I encourage you to check out the documentation on [Multi-Level Indexing](http://pandas.pydata.org/pandas-docs/stable/advanced.html) and [Using .xs](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.xs.html).
+# Let's explore the data a bit! Before continuing, I encourage you to check out the documentation on
+# [Multi-Level Indexing](http://pandas.pydata.org/pandas-docs/stable/advanced.html) and [Using .xs]
+# (http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.xs.html).
 # Reference the solutions if you can not figure out how to use .xs(), since that will be a major part of this project.
 # 
 # ** What is the max Close price for each bank's stock throughout the time period?**
 
 # In[58]:
+# for symb in tickers:
+#     print(symb + "  " + str(bank_stocks[symb]['Close'].max()))
+print(bank_stocks.xs(key='Close', axis=1, level='Stock Info'))
+print(bank_stocks.xs(key='Close', axis=1, level='Stock Info').max())
 
-
-# ** Create a new empty DataFrame called returns. This dataframe will contain the returns for each bank's stock. returns are typically defined by:**
+# ** Create a new empty DataFrame called returns. This dataframe will contain the returns for each bank's stock. returns
+# are typically defined by:**
 # 
 # $$r_t = \frac{p_t - p_{t-1}}{p_{t-1}} = \frac{p_t}{p_{t-1}} - 1$$
 
 # In[60]:
+returns = pd.DataFrame()
 
-
-# ** We can use pandas pct_change() method on the Close column to create a column representing this return value. Create a for loop that goes and for each Bank Stock Ticker creates this returns column and set's it as a column in the returns DataFrame.**
+# ** We can use pandas pct_change() method on the Close column to create a column representing this return value.
+# Create a for loop that goes and for each Bank Stock Ticker creates this returns column and set's it as a column in
+# the returns DataFrame.**
 
 # In[65]:
+for symb in tickers:
+    returns[symb + ' Return'] = bank_stocks[symb]['Close'].pct_change()
 
+print(returns.head())
 
 # ** Create a pairplot using seaborn of the returns dataframe. What stock stands out to you? Can you figure out why?**
 
 # In[68]:
-
+g = sns.pairplot(returns[1:])
+plt.show()
 
 # * See solution for details about Citigroup behavior....
 
