@@ -127,6 +127,9 @@ print(tickers)
 # In[8]:
 bank_stocks = pd.concat([BAC, C, GS, JPM, MS, WFC], axis=1, keys=tickers)
 
+# have to use the file provided by the course ....
+bank_stocks = pd.read_pickle('all_banks')
+
 # ** Set the column name levels (this is filled out for you):**
 
 # In[9]:
@@ -180,48 +183,51 @@ plt.show()
 
 # * See solution for details about Citigroup behavior....
 
-# ** Using this returns DataFrame, figure out on what dates each bank stock had the best and worst single day returns. You should notice that 4 of the banks share the same day for the worst drop, did anything significant happen that day?**
+# ** Using this returns DataFrame, figure out on what dates each bank stock had the best and worst single day returns.
+# You should notice that 4 of the banks share the same day for the worst drop, did anything significant happen that
+# day?**
 
 # In[75]:
-
-
-# ** You should have noticed that Citigroup's largest drop and biggest gain were very close to one another, did anythign significant happen in that time frame? **
+print(returns.max())
+print(returns.idxmax())
+# ** You should have noticed that Citigroup's largest drop and biggest gain were very close to one another,
+# did anythign significant happen in that time frame? **
 
 # * See Solution for details
 
 # In[76]:
-
-
-# ** Take a look at the standard deviation of the returns, which stock would you classify as the riskiest over the entire time period? Which would you classify as the riskiest for the year 2015?**
+print(returns.min())
+print(returns.idxmin())
+# ** Take a look at the standard deviation of the returns, which stock would you classify as the riskiest over the
+# entire time period? Which would you classify as the riskiest for the year 2015?**
 
 # In[81]:
-
+print(returns.std())
 
 # In[88]:
-
+print(returns[returns.index.year == 2015].std())
 
 # ** Create a distplot using seaborn of the 2015 returns for Morgan Stanley **
 
 # In[94]:
-
+sns.distplot(returns[returns.index.year == 2015]['MS Return'], color='green', bins=100)
+plt.show()
 
 # ** Create a distplot using seaborn of the 2008 returns for CitiGroup **
 
 # In[98]:
-
+sns.distplot(returns[returns.index.year == 2008]['C Return'], color='green', bins=100)
+plt.show()
 
 # ____
 # # More Visualization
 # 
-# A lot of this project will focus on visualizations. Feel free to use any of your preferred visualization libraries to try to recreate the described plots below, seaborn, matplotlib, plotly and cufflinks, or just pandas.
+# A lot of this project will focus on visualizations. Feel free to use any of your preferred visualization libraries
+# to try to recreate the described plots below, seaborn, matplotlib, plotly and cufflinks, or just pandas.
 # 
 # ### Imports
 
 # In[16]:
-
-
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 sns.set_style('whitegrid')
 # get_ipython().run_line_magic('matplotlib', 'inline')
@@ -232,11 +238,15 @@ import cufflinks as cf
 
 cf.go_offline()
 
-# ** Create a line plot showing Close price for each bank for the entire index of time. (Hint: Try using a for loop, or use [.xs](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.xs.html) to get a cross section of the data.)**
+# ** Create a line plot showing Close price for each bank for the entire index of time. (Hint: Try using a for loop, or
+# use [.xs](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.xs.html) to get a cross section of
+# the data.)**
 
 # In[17]:
-
-
+sns.lineplot(
+    # x="timepoint", y="signal", hue="event",
+                  data=bank_stocks.xs(key='Close', axis=1, level='Stock Info'))
+plt.show()
 # In[18]:
 
 
@@ -250,24 +260,34 @@ cf.go_offline()
 # ** Plot the rolling 30 day average against the Close Price for Bank Of America's stock for the year 2008**
 
 # In[141]:
-
+plt.figure(figsize=(12, 6))
+bank_stocks[bank_stocks.index.year == 2015]['BAC']['Close'].rolling(window=30).mean().plot(label='30 Day Avg')
+bank_stocks[bank_stocks.index.year == 2015]['BAC']['Close'].plot(label='BAC CLOSE')
+plt.legend()
+plt.show()
 
 # ** Create a heatmap of the correlation between the stocks Close Price.**
 
 # In[41]:
-
+sns.heatmap(bank_stocks.xs(key='Close', axis=1, level='Stock Info').corr(), cmap='coolwarm', annot=True)
+plt.title("close correlation")
+plt.show()
 
 # ** Optional: Use seaborn's clustermap to cluster the correlations together:**
 
 # In[26]:
-
+sns.clustermap(bank_stocks.xs(key='Close', axis=1, level='Stock Info').corr(), cmap='coolwarm', annot=True)
+plt.title("close correlation")
+plt.show()
 
 # In[42]:
 
 
 # # Part 2 (Optional)
 # 
-# In this second part of the project we will rely on the cufflinks library to create some Technical Analysis plots. This part of the project is experimental due to its heavy reliance on the cuffinks project, so feel free to skip it if any functionality is broken in the future.
+# In this second part of the project we will rely on the cufflinks library to create some Technical Analysis plots.
+# This part of the project is experimental due to its heavy reliance on the cuffinks project, so feel free to skip it
+# if any functionality is broken in the future.
 
 # ** Use .iplot(kind='candle) to create a candle plot of Bank of America's stock from Jan 1st 2015 to Jan 1st 2016.**
 
@@ -286,4 +306,5 @@ cf.go_offline()
 
 # # Great Job!
 # 
-# Definitely a lot of more specific finance topics here, so don't worry if you didn't understand them all! The only thing you should be concerned with understanding are the basic pandas and visualization oeprations.
+# Definitely a lot of more specific finance topics here, so don't worry if you didn't understand them all! The only
+# thing you should be concerned with understanding are the basic pandas and visualization oeprations.
