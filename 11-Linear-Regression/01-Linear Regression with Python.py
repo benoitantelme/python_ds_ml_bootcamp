@@ -9,11 +9,15 @@
 # 
 # ** This is mostly just code for reference. Please watch the video lecture for more info behind all of this code.**
 # 
-# Your neighbor is a real estate agent and wants some help predicting housing prices for regions in the USA. It would be great if you could somehow create a model for her that allows her to put in a few features of a house and returns back an estimate of what the house would sell for.
+# Your neighbor is a real estate agent and wants some help predicting housing prices for regions in the USA. It would
+# be great if you could somehow create a model for her that allows her to put in a few features of a house and returns
+# back an estimate of what the house would sell for.
 # 
-# She has asked you if you could help her out with your new data science skills. You say yes, and decide that Linear Regression might be a good path to solve this problem!
+# She has asked you if you could help her out with your new data science skills. You say yes, and decide that Linear
+# Regression might be a good path to solve this problem!
 # 
-# Your neighbor then gives you some information about a bunch of houses in regions of the United States,it is all in the data set: USA_Housing.csv.
+# Your neighbor then gives you some information about a bunch of houses in regions of the United States,it is all in
+# the data set: USA_Housing.csv.
 # 
 # The data contains the following columns:
 # 
@@ -27,7 +31,8 @@
 
 # **Let's get started!**
 # ## Check out the data
-# We've been able to get some data from your neighbor for housing prices as a csv set, let's get our environment ready with the libraries we'll need and then import the data!
+# We've been able to get some data from your neighbor for housing prices as a csv set, let's get our environment ready
+# with the libraries we'll need and then import the data!
 # ### Import Libraries
 
 # In[255]:
@@ -37,7 +42,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-get_ipython().run_line_magic('matplotlib', 'inline')
+
+# get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # ### Check out the Data
@@ -47,30 +53,25 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 
 USAhousing = pd.read_csv('USA_Housing.csv')
 
-
 # In[257]:
 
 
 USAhousing.head()
-
 
 # In[258]:
 
 
 USAhousing.info()
 
-
 # In[259]:
 
 
 USAhousing.describe()
 
-
 # In[260]:
 
 
 USAhousing.columns
-
 
 # # EDA
 # 
@@ -80,23 +81,24 @@ USAhousing.columns
 
 
 sns.pairplot(USAhousing)
-
+plt.show()
 
 # In[262]:
 
 
 sns.distplot(USAhousing['Price'])
-
+plt.show()
 
 # In[263]:
 
 
 sns.heatmap(USAhousing.corr())
 
-
 # ## Training a Linear Regression Model
 # 
-# Let's now begin to train out regression model! We will need to first split up our data into an X array that contains the features to train on, and a y array with the target variable, in this case the Price column. We will toss out the Address column because it only has text info that the linear regression model can't use.
+# Let's now begin to train out regression model! We will need to first split up our data into an X array that
+# contains the features to train on, and a y array with the target variable, in this case the Price column. We
+# will toss out the Address column because it only has text info that the linear regression model can't use.
 # 
 # ### X and y arrays
 
@@ -104,25 +106,23 @@ sns.heatmap(USAhousing.corr())
 
 
 X = USAhousing[['Avg. Area Income', 'Avg. Area House Age', 'Avg. Area Number of Rooms',
-               'Avg. Area Number of Bedrooms', 'Area Population']]
+                'Avg. Area Number of Bedrooms', 'Area Population']]
 y = USAhousing['Price']
-
 
 # ## Train Test Split
 # 
-# Now let's split the data into a training set and a testing set. We will train out model on the training set and then use the test set to evaluate the model.
+# Now let's split the data into a training set and a testing set. We will train out model on the training set and
+# then use the test set to evaluate the model.
 
 # In[265]:
 
 
 from sklearn.model_selection import train_test_split
 
-
 # In[266]:
 
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=101)
-
 
 # ## Creating and Training the Model
 
@@ -131,36 +131,31 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_
 
 from sklearn.linear_model import LinearRegression
 
-
 # In[268]:
 
 
 lm = LinearRegression()
 
-
 # In[269]:
 
 
-lm.fit(X_train,y_train)
-
+lm.fit(X_train, y_train)
 
 # ## Model Evaluation
 # 
 # Let's evaluate the model by checking out it's coefficients and how we can interpret them.
 
 # In[270]:
-
+print(lm.coef_)
 
 # print the intercept
 print(lm.intercept_)
 
-
 # In[277]:
 
 
-coeff_df = pd.DataFrame(lm.coef_,X.columns,columns=['Coefficient'])
+coeff_df = pd.DataFrame(lm.coef_, X.columns, columns=['Coefficient'])
 coeff_df
-
 
 # Interpreting the coefficients:
 # 
@@ -188,20 +183,17 @@ coeff_df
 
 predictions = lm.predict(X_test)
 
-
 # In[282]:
 
 
-plt.scatter(y_test,predictions)
-
+plt.scatter(y_test, predictions)
 
 # **Residual Histogram**
 
 # In[281]:
 
 
-sns.distplot((y_test-predictions),bins=50);
-
+sns.distplot((y_test - predictions), bins=50);
 
 # ## Regression Evaluation Metrics
 # 
@@ -233,7 +225,6 @@ sns.distplot((y_test-predictions),bins=50);
 
 from sklearn import metrics
 
-
 # In[276]:
 
 
@@ -241,8 +232,7 @@ print('MAE:', metrics.mean_absolute_error(y_test, predictions))
 print('MSE:', metrics.mean_squared_error(y_test, predictions))
 print('RMSE:', np.sqrt(metrics.mean_squared_error(y_test, predictions)))
 
-
-# This was your first real Machine Learning Project! Congrats on helping your neighbor out! We'll let this end here for now, but go ahead and explore the Boston Dataset mentioned earlier if this particular data set was interesting to you! 
+# This was your first real Machine Learning Project! Congrats on helping your neighbor out! We'll let this end here for now, but go ahead and explore the Boston Dataset mentioned earlier if this particular data set was interesting to you!
 # 
 # Up next is your own Machine Learning Project!
 # 
