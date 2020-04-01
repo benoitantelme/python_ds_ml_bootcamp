@@ -46,7 +46,10 @@ df.head()
 
 # ## Standardize the Variables
 # 
-# Because the KNN classifier predicts the class of a given test observation by identifying the observations that are nearest to it, the scale of the variables matters. Any variables that are on a large scale will have a much larger effect on the distance between the observations, and hence on the KNN classifier, than variables that are on a small scale.
+# Because the KNN classifier predicts the class of a given test observation by identifying the observations that are
+# nearest to it, the scale of the variables matters. Any variables that are on a large scale will have a much larger
+# effect on the distance between the observations, and hence on the KNN classifier, than variables that are on a small
+# scale.
 
 # In[78]:
 
@@ -127,21 +130,19 @@ pred = knn.predict(X_test)
 # Let's evaluate our KNN model!
 
 # In[89]:
-
-
-from sklearn.metrics import classification_report,confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix
 
 
 # In[90]:
 
 
-print(confusion_matrix(y_test,pred))
+print(confusion_matrix(y_test, pred))
 
 
 # In[91]:
 
 
-print(classification_report(y_test,pred))
+print(classification_report(y_test, pred))
 
 
 # ## Choosing a K Value
