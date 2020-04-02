@@ -7,12 +7,17 @@
 # ___
 # # K Means Clustering Project 
 # 
-# For this project we will attempt to use KMeans Clustering to cluster Universities into to two groups, Private and Public.
+# For this project we will attempt to use KMeans Clustering to cluster Universities into to two groups, Private and
+# Public.
 # 
 # ___
-# It is **very important to note, we actually have the labels for this data set, but we will NOT use them for the KMeans clustering algorithm, since that is an unsupervised learning algorithm.** 
+# It is **very important to note, we actually have the labels for this data set, but we will NOT use them for the KMeans
+# clustering algorithm, since that is an unsupervised learning algorithm.**
 # 
-# When using the Kmeans algorithm under normal circumstances, it is because you don't have labels. In this case we will use the labels to try to get an idea of how well the algorithm performed, but you won't usually do this for Kmeans, so the classification report and confusion matrix at the end of this project, don't truly make sense in a real world setting!.
+# When using the Kmeans algorithm under normal circumstances, it is because you don't have labels. In this case we will
+# use the labels to try to get an idea of how well the algorithm performed, but you won't usually do this for Kmeans,
+# so the classification report and confusion matrix at the end of this project, don't truly make sense in a real world
+# setting!.
 # ___
 # 
 # ## The Data
@@ -42,41 +47,31 @@
 # ** Import the libraries you usually use for data analysis.**
 
 # In[103]:
-
-
-
-
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
 
 # ## Get the Data
 
 # ** Read in the College_Data file using read_csv. Figure out how to set the first column as the index.**
 
 # In[104]:
+from scipy import stats
 
-
-
-
+df = pd.read_csv('College_Data', index_col=0)
 
 # **Check the head of the data**
 
 # In[105]:
-
-
-
-
+print(df.head())
 
 # ** Check the info() and describe() methods on the data.**
 
 # In[106]:
-
-
-
-
+df.info()
+print(df.describe())
 
 # In[107]:
-
-
-
 
 
 # ## EDA
@@ -86,61 +81,52 @@
 # ** Create a scatterplot of Grad.Rate versus Room.Board where the points are colored by the Private column. **
 
 # In[111]:
-
-
-
-
+sns.set_style("whitegrid")
+sns.lmplot(x='Room.Board', y='Grad.Rate', data=df, hue='Private')
+plt.show()
 
 # **Create a scatterplot of F.Undergrad versus Outstate where the points are colored by the Private column.**
 
 # In[112]:
+sns.lmplot(x='Outstate', y='F.Undergrad', data=df, hue='Private')
+plt.show()
 
-
-
-
-
-# ** Create a stacked histogram showing Out of State Tuition based on the Private column. Try doing this using [sns.FacetGrid](https://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.FacetGrid.html). If that is too tricky, see if you can do it just by using two instances of pandas.plot(kind='hist'). **
+# ** Create a stacked histogram showing Out of State Tuition based on the Private column. Try doing this using [
+# sns.FacetGrid](https://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.FacetGrid.html). If that is too
+# tricky, see if you can do it just by using two instances of pandas.plot(kind='hist'). **
 
 # In[109]:
-
-
-
-
+g = sns.FacetGrid(df, hue='Private')
+g = g.map(plt.hist, "Outstate")
+plt.show()
 
 # **Create a similar histogram for the Grad.Rate column.**
 
 # In[110]:
+g = sns.FacetGrid(df, hue='Private')
+g = g.map(plt.hist, "Grad.Rate")
+plt.show()
 
-
-
-
-
-# ** Notice how there seems to be a private school with a graduation rate of higher than 100%.What is the name of that school?**
+# ** Notice how there seems to be a private school with a graduation rate of higher than 100%.What is the name of that
+# school?**
 
 # In[113]:
+print(df[df["Grad.Rate"] > 100])
 
-
-
-
-
-# ** Set that school's graduation rate to 100 so it makes sense. You may get a warning not an error) when doing this operation, so use dataframe operations or just re-do the histogram visualization to make sure it actually went through.**
+# ** Set that school's graduation rate to 100 so it makes sense. You may get a warning not an error) when doing this
+# operation, so use dataframe operations or just re-do the histogram visualization to make sure it actually went
+# through.**
 
 # In[93]:
-
-
-
-
+df.loc['Cazenovia College', 'Grad.Rate'] = 100
+print(df.loc['Cazenovia College'])
 
 # In[94]:
-
-
-
-
+g = sns.FacetGrid(df, hue='Private')
+g = g.map(plt.hist, "Grad.Rate")
+plt.show()
 
 # In[95]:
-
-
-
 
 
 # ## K Means Cluster Creation
@@ -150,67 +136,49 @@
 # ** Import KMeans from SciKit Learn.**
 
 # In[114]:
-
-
-
-
+from sklearn.cluster import KMeans
 
 # ** Create an instance of a K Means model with 2 clusters.**
 
 # In[115]:
-
-
-
-
+kmeans = KMeans(n_clusters=2)
 
 # **Fit the model to all the data except for the Private label.**
 
 # In[116]:
-
-
-
-
+kmeans.fit(df.drop('Private', axis=1))
 
 # ** What are the cluster center vectors?**
 
 # In[117]:
-
-
-
-
+print(kmeans.cluster_centers_)
 
 # ## Evaluation
 # 
-# There is no perfect way to evaluate clustering if you don't have the labels, however since this is just an exercise, we do have the labels, so we take advantage of this to evaluate our clusters, keep in mind, you usually won't have this luxury in the real world.
+# There is no perfect way to evaluate clustering if you don't have the labels, however since this is just an exercise,
+# we do have the labels, so we take advantage of this to evaluate our clusters, keep in mind, you usually won't have
+# this luxury in the real world.
 # 
 # ** Create a new column for df called 'Cluster', which is a 1 for a Private school, and a 0 for a public school.**
 
 # In[118]:
-
-
-
-
+df['Cluster'] = df['Private'].apply(lambda x: 1 if x == 'Yes' else 0)
 
 # In[119]:
-
-
-
-
+print(df.head())
 
 # In[122]:
 
 
-
-
-
-# ** Create a confusion matrix and classification report to see how well the Kmeans clustering worked without being given any labels.**
+# ** Create a confusion matrix and classification report to see how well the Kmeans clustering worked without being
+# given any labels.**
 
 # In[123]:
+from sklearn.metrics import confusion_matrix, classification_report
 
-
-
-
-
-# Not so bad considering the algorithm is purely using the features to cluster the universities into 2 distinct groups! Hopefully you can begin to see how K Means is useful for clustering un-labeled data!
+print(confusion_matrix(df['Cluster'], kmeans.labels_))
+print(classification_report(df['Cluster'], kmeans.labels_))
+# Not so bad considering the algorithm is purely using the features to cluster the universities into 2 distinct groups!
+# Hopefully you can begin to see how K Means is useful for clustering un-labeled data!
 # 
 # ## Great Job!
