@@ -7,9 +7,11 @@
 # ___
 # # Decision Trees and Random Forests in Python
 
-# This is the code for the lecture video which goes over tree methods in Python. Reference the video lecture for the full explanation of the code!
+# This is the code for the lecture video which goes over tree methods in Python. Reference the video lecture for the
+# full explanation of the code!
 # 
-# I also wrote a [blog post](https://medium.com/@josemarcialportilla/enchanted-random-forest-b08d418cb411#.hh7n1co54) explaining the general logic of decision trees and random forests which you can check out. 
+# I also wrote a [blog post](https://medium.com/@josemarcialportilla/enchanted-random-forest-b08d418cb411#.hh7n1co54)
+# explaining the general logic of decision trees and random forests which you can check out.
 # 
 # ## Import Libraries
 
@@ -20,7 +22,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-get_ipython().run_line_magic('matplotlib', 'inline')
+# get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # ## Get the Data
