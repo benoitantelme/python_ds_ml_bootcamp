@@ -7,13 +7,17 @@
 
 # # Keras Syntax Basics
 # 
-# With TensorFlow 2.0 , Keras is now the main API choice. Let's work through a simple regression project to understand the basics of the Keras syntax and adding layers.
+# With TensorFlow 2.0 , Keras is now the main API choice. Let's work through a simple regression project to
+# understand the basics of the Keras syntax and adding layers.
 
 # ## The Data
 # 
-# To learn the basic syntax of Keras, we will use a very simple fake data set, in the subsequent lectures we will focus on real datasets, along with feature engineering! For now, let's focus on the syntax of TensorFlow 2.0.
+# To learn the basic syntax of Keras, we will use a very simple fake data set, in the subsequent lectures we will
+# focus on real datasets, along with feature engineering! For now, let's focus on the syntax of TensorFlow 2.0.
 # 
-# Let's pretend this data are measurements of some rare gem stones, with 2 measurement features and a sale price. Our final goal would be to try to predict the sale price of a new gem stone we just mined from the ground, in order to try to set a fair price in the market.
+# Let's pretend this data are measurements of some rare gem stones, with 2 measurement features and a sale price. Our
+# final goal would be to try to predict the sale price of a new gem stone we just mined from the ground, in order to
+# try to set a fair price in the market.
 # 
 # ### Load the Data
 
