@@ -270,7 +270,7 @@ df.info()
 # In[9]:
 sns.set_style("whitegrid")
 sns.countplot(x='loan_status', data=df)
-plt.show()
+# plt.show()
 
 # In[10]:
 
@@ -279,7 +279,7 @@ plt.show()
 
 # In[11]:
 df['loan_amnt'].plot(bins=30, kind='hist', figsize=(10, 6))
-plt.show()
+# plt.show()
 
 # In[12]:
 
@@ -302,7 +302,7 @@ print(df.corr())
 
 # In[15]:
 sns.heatmap(df.corr(), annot=True, cmap='viridis')
-plt.show()
+# plt.show()
 
 # In[16]:
 
@@ -313,13 +313,13 @@ plt.show()
 
 # In[17]:
 # sns.jointplot(x='installment', y='loan_amnt', data=df, kind='scatter').annotate(stats.pearsonr)
-plt.show()
+# plt.show()
 
 # **TASK: Create a boxplot showing the relationship between the loan_status and the Loan Amount.**
 
 # In[21]:
 sns.boxplot(x='loan_status', y='loan_amnt', data=df)
-plt.show()
+# plt.show()
 
 # In[22]:
 
@@ -344,7 +344,7 @@ print(df['sub_grade'].unique())
 
 # In[ ]:
 sns.countplot(x='grade', data=df, hue='loan_status')
-plt.show()
+# plt.show()
 
 # **TASK: Display a count plot per subgrade. You may need to resize for this plot and [reorder]
 # (https://seaborn.pydata.org/generated/seaborn.countplot.html#seaborn.countplot) the x axis. Feel free to edit the
@@ -354,7 +354,7 @@ plt.show()
 # In[29]:
 plt.figure(figsize=(12, 6))
 sns.countplot(x='sub_grade', data=df, hue='loan_status')
-plt.show()
+# plt.show()
 
 # **TASK: It looks like F and G subgrades don't get paid back that often. Isloate those and recreate the countplot
 # just for those subgrades.**
@@ -364,7 +364,7 @@ plt.figure(figsize=(12, 6))
 sub_df = df[(df['grade'] == 'F') | (df['grade'] == 'G')]
 sub_order = sorted(sub_df['sub_grade'].unique())
 sns.countplot(x='sub_grade', data=sub_df, order=sub_order, hue='loan_status')
-plt.show()
+# plt.show()
 
 # **TASK: Create a new column called 'loan_repaid' which will contain a 1 if the loan status was "Fully Paid" and a 0
 # if it was "Charged Off".**
@@ -378,7 +378,7 @@ df['loan_repaid'] = df['loan_status'].apply(lambda x: 1 if x == 'Fully Paid' els
 
 # In[39]:
 df.corr()['loan_repaid'].sort_values().drop('loan_repaid').plot(kind='bar')
-plt.show()
+# plt.show()
 
 # ---
 # ---
@@ -442,7 +442,7 @@ sns.countplot(x='emp_length', data=df, order=['< 1 year',
                                               '8 years',
                                               '9 years',
                                               '10+ years'])
-plt.show()
+# plt.show()
 
 # **TASK: Plot out the countplot with a hue separating Fully Paid vs Charged Off**
 
@@ -459,7 +459,9 @@ sns.countplot(x='emp_length', data=df, order=['< 1 year',
                                               '9 years',
                                               '10+ years'],
               hue='loan_status')
-plt.show()
+# plt.show()
+
+df.drop('loan_status', axis=1, inplace=True)
 
 # **CHALLENGE TASK: This still doesn't really inform us if there is a strong relationship between employment length and
 # being charged off, what we want is the percentage of charge offs per category. Essentially informing us what percent
@@ -474,7 +476,7 @@ ratio = df[df['loan_repaid'] == 0].groupby('emp_length').count()['loan_repaid'] 
 print(ratio)
 
 ratio.plot(kind='bar')
-plt.show()
+# plt.show()
 
 # **TASK: Charge off rates are extremely similar across all employment lengths. Go ahead and drop the emp_length
 # column.**
@@ -560,20 +562,17 @@ print(df.isnull().sum())
 
 # ## Categorical Variables and Dummy Variables
 # 
-# **We're done working with the missing data! Now we just need to deal with the string values due to the categorical columns.**
+# **We're done working with the missing data! Now we just need to deal with the string values due to the categorical
+# columns.**
 # 
-# **TASK: List all the columns that are currently non-numeric. [Helpful Link](https://stackoverflow.com/questions/22470690/get-list-of-pandas-dataframe-columns-based-on-data-type)**
+# **TASK: List all the columns that are currently non-numeric.
+# [Helpful Link](https://stackoverflow.com/questions/22470690/get-list-of-pandas-dataframe-columns-based-on-data-type)**
 # 
-# [Another very useful method call](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.select_dtypes.html)
+# [Another very useful method call]
+# (https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.select_dtypes.html)
 
 # In[90]:
-
-
-# CODE HERE
-
-
-# In[91]:
-
+print(df.select_dtypes(include='object').columns)
 
 # ---
 # **Let's now go through all the string features to see what we should do with them.**
@@ -586,164 +585,118 @@ print(df.isnull().sum())
 # **TASK: Convert the term feature into either a 36 or 60 integer numeric data type using .apply() or .map().**
 
 # In[92]:
-
-
-# CODE HERE
-
-
-# In[93]:
-
-
-# In[94]:
-
+print(df['term'].value_counts())
+df['term'] = df['term'].apply(lambda x: 36 if x == '36 months' else 60)
 
 # ### grade feature
 # 
 # **TASK: We already know grade is part of sub_grade, so just drop the grade feature.**
 
 # In[95]:
+df.drop('grade', axis=1, inplace=True)
 
-
-# CODE HERE
-
-
-# In[96]:
-
-
-# **TASK: Convert the subgrade into dummy variables. Then concatenate these new columns to the original dataframe. Remember to drop the original subgrade column and to add drop_first=True to your get_dummies call.**
+# **TASK: Convert the subgrade into dummy variables. Then concatenate these new columns to the original dataframe.
+# Remember to drop the original subgrade column and to add drop_first=True to your get_dummies call.**
 
 # In[97]:
+subgrade_df = pd.get_dummies(df['sub_grade'], drop_first=True)
+df.drop(['sub_grade'], axis=1, inplace=True)
+df = pd.concat([df, subgrade_df], axis=1)
 
+print(df.columns)
 
-# CODE HERE
-
-
-# In[98]:
-
-
-# In[99]:
-
-
-# In[100]:
-
-
-# In[101]:
-
-
-# ### verification_status, application_type,initial_list_status,purpose
-# **TASK: Convert these columns: ['verification_status', 'application_type','initial_list_status','purpose'] into dummy variables and concatenate them with the original dataframe. Remember to set drop_first=True and to drop the original columns.**
+# ### verification_status, application_type,initial_list_status,purpose **TASK: Convert these columns: [
+# 'verification_status', 'application_type','initial_list_status','purpose'] into dummy variables and concatenate
+# them with the original dataframe. Remember to set drop_first=True and to drop the original columns.**
 
 # In[102]:
+verif_status_df = pd.get_dummies(df['verification_status'], drop_first=True)
+df.drop(['verification_status'], axis=1, inplace=True)
 
+init_list_df = pd.get_dummies(df['initial_list_status'], drop_first=True)
+df.drop(['initial_list_status'], axis=1, inplace=True)
 
-# CODE HERE
+purpose_df = pd.get_dummies(df['purpose'], drop_first=True)
+df.drop(['purpose'], axis=1, inplace=True)
 
+app_type_df = pd.get_dummies(df['application_type'], drop_first=True)
+df.drop(['application_type'], axis=1, inplace=True)
 
-# In[103]:
-
-
-# In[ ]:
-
+df = pd.concat([df, verif_status_df, init_list_df, purpose_df, app_type_df], axis=1)
 
 # ### home_ownership
 # **TASK:Review the value_counts for the home_ownership column.**
 
 # In[104]:
+print(df['home_ownership'].value_counts())
 
-
-# CODE HERE
-
-
-# In[105]:
-
-
-# **TASK: Convert these to dummy variables, but [replace](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html) NONE and ANY with OTHER, so that we end up with just 4 categories, MORTGAGE, RENT, OWN, OTHER. Then concatenate them with the original dataframe. Remember to set drop_first=True and to drop the original columns.**
+# **TASK: Convert these to dummy variables, but [replace](
+# https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html) NONE and ANY with OTHER,
+# so that we end up with just 4 categories, MORTGAGE, RENT, OWN, OTHER. Then concatenate them with the original
+# dataframe. Remember to set drop_first=True and to drop the original columns.**
 
 # In[106]:
-
-
-# CODE HERE
-
+df['home_ownership'] = df['home_ownership'].apply(lambda x: 'OTHER' if x == 'NONE' or x == 'ANY' else x)
 
 # In[107]:
 
+ho_df = pd.get_dummies(df['home_ownership'], drop_first=True)
+df.drop(['home_ownership'], axis=1, inplace=True)
+df = pd.concat([df, ho_df], axis=1)
 
-# ### address
-# **TASK: Let's feature engineer a zip code column from the address in the data set. Create a column called 'zip_code' that extracts the zip code from the address column.**
+print(df.columns)
+
+# ### address **TASK: Let's feature engineer a zip code column from the address in the data set. Create a column
+# called 'zip_code' that extracts the zip code from the address column.**
 
 # In[108]:
+print(df['address'].head())
+df['zip_code'] = df['address'].apply(lambda x: x[-5:])
+print(df['zip_code'].head())
 
-
-# CODE HERE
-
-
-# In[109]:
-
-
-# **TASK: Now make this zip_code column into dummy variables using pandas. Concatenate the result and drop the original zip_code column along with dropping the address column.**
-
-# In[ ]:
+# **TASK: Now make this zip_code column into dummy variables using pandas. Concatenate the result and drop the
+# original zip_code column along with dropping the address column.**
 
 
 # In[110]:
-
+zc_df = pd.get_dummies(df['zip_code'], drop_first=True)
+df.drop(['address', 'zip_code'], axis=1, inplace=True)
+df = pd.concat([df, zc_df], axis=1)
 
 # ### issue_d
 # 
-# **TASK: This would be data leakage, we wouldn't know beforehand whether or not a loan would be issued when using our model, so in theory we wouldn't have an issue_date, drop this feature.**
+# **TASK: This would be data leakage, we wouldn't know beforehand whether or not a loan would be issued when using
+# our model, so in theory we wouldn't have an issue_date, drop this feature.**
 
 # In[111]:
+df.drop(['issue_d'], axis=1, inplace=True)
 
-
-# CODE HERE
-
-
-# In[112]:
-
-
-# ### earliest_cr_line
-# **TASK: This appears to be a historical time stamp feature. Extract the year from this feature using a .apply function, then convert it to a numeric feature. Set this new data to a feature column called 'earliest_cr_year'.Then drop the earliest_cr_line feature.**
+# ### earliest_cr_line **TASK: This appears to be a historical time stamp feature. Extract the year from this feature
+# using a .apply function, then convert it to a numeric feature. Set this new data to a feature column called
+# 'earliest_cr_year'.Then drop the earliest_cr_line feature.**
 
 # In[113]:
-
-
-# CODE HERE
-
-
-# In[114]:
-
-
-# In[115]:
-
+print(df['earliest_cr_line'].head())
+df['earliest_cr_year'] = df['earliest_cr_line'].apply(lambda x: x.split('-')[1])
+df.drop(['earliest_cr_line'], axis=1, inplace=True)
+print(df['earliest_cr_year'].head())
 
 # ## Train Test Split
 
 # **TASK: Import train_test_split from sklearn.**
 
 # In[116]:
+from sklearn.model_selection import train_test_split
 
-
-# **TASK: drop the load_status column we created earlier, since its a duplicate of the loan_repaid column. We'll use the loan_repaid column since its already in 0s and 1s.**
-
-# In[1]:
-
-
-# CODE HERE
-
-
-# In[118]:
+# **TASK: drop the load_status column we created earlier, since its a duplicate of the loan_repaid column. We'll use
+# the loan_repaid column since its already in 0s and 1s.**
 
 
 # **TASK: Set X and y variables to the .values of the features and label.**
 
 # In[119]:
-
-
-# CODE HERE
-
-
-# In[120]:
-
+X = df.drop('loan_repaid', axis=1).values
+y = df['loan_repaid'].values
 
 # ----
 # ----
@@ -752,7 +705,8 @@ print(df.isnull().sum())
 # 
 # ## Grabbing a Sample for Training Time
 # 
-# ### OPTIONAL: Use .sample() to grab a sample of the 490k+ entries to save time on training. Highly recommended for lower RAM computers or if you are not using GPU.
+# ### OPTIONAL: Use .sample() to grab a sample of the 490k+ entries to save time on training. Highly recommended for
+# lower RAM computers or if you are not using GPU.
 # 
 # ----
 # ----
@@ -760,16 +714,13 @@ print(df.isnull().sum())
 # In[121]:
 
 
-# df = df.sample(frac=0.1,random_state=101)
-print(len(df))
+df = df.sample(frac=0.1, random_state=101)
+# print(len(df))
 
 # **TASK: Perform a train/test split with test_size=0.2 and a random_state of 101.**
 
 # In[122]:
-
-
-# CODE HERE
-
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=101)
 
 # In[123]:
 
@@ -780,41 +731,27 @@ print(len(df))
 # the test set so we only fit on the X_train data.**
 
 # In[124]:
+from sklearn.preprocessing import MinMaxScaler
 
-
-# CODE HERE
-
-
-# In[125]:
-
-
-# In[126]:
-
-
-# In[127]:
-
-
-# In[128]:
-
+scaler = MinMaxScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 
 # # Creating the Model
 # 
 # **TASK: Run the cell below to import the necessary Keras functions.**
 
 # In[129]:
-
-
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 
 # **TASK: Build a sequential model to will be trained on the data. You have unlimited options here, but here is what
-# the solution uses: a model that goes 78 --> 39 --> 19--> 1 output neuron. OPTIONAL: Explore adding [Dropout layers](https://keras.io/layers/core/) [1](https://en.wikipedia.org/wiki/Dropout_(neural_networks)) [2](https://towardsdatascience.com/machine-learning-part-20-dropout-keras-layers-explained-8c9f6dc4c9ab)**
+# the solution uses: a model that goes 78 --> 39 --> 19--> 1 output neuron. OPTIONAL: Explore adding [Dropout
+# layers](https://keras.io/layers/core/) [1](https://en.wikipedia.org/wiki/Dropout_(neural_networks)) [2](
+# https://towardsdatascience.com/machine-learning-part-20-dropout-keras-layers-explained-8c9f6dc4c9ab)**
 
 # In[130]:
-
-
-# CODE HERE
 model = Sequential()
 
 # Choose whatever number of layers/neurons you want.
@@ -825,34 +762,37 @@ model = Sequential()
 
 
 # In[131]:
+# input layer
+model.add(Dense(78, activation='relu'))
+model.add(Dropout(0.2))
 
+# hidden layers
+model.add(Dense(39, activation='relu'))
+model.add(Dropout(0.2))
+model.add(Dense(19, activation='relu'))
+model.add(Dropout(0.2))
+
+# output layer
+model.add(Dense(units=1, activation='sigmoid'))
+
+# Compile model
+model.compile(loss='binary_crossentropy', optimizer='adam')
 
 # **TASK: Fit the model to the training data for at least 25 epochs. Also add in the validation data for later
 # plotting.
 # Optional: add in a batch_size of 256.**
 
 # In[132]:
-
-
-# CODE HERE
-
-
-# In[133]:
-
+# model.fit(x=X_train, y=y_train, epochs=30, batch_size=256, verbose=1, validation_data=(X_test, y_test))
 
 # **TASK: OPTIONAL: Save your model.**
 
 # In[134]:
+from tensorflow.keras.models import load_model
 
+# model.save('my_model.h5')
 
-# CODE HERE
-
-
-# In[135]:
-
-
-# In[136]:
-
+later_model = load_model('my_model.h5')
 
 # # Section 3: Evaluating Model Performance.
 # 
