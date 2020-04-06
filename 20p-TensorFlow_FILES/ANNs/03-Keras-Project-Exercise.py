@@ -695,8 +695,16 @@ from sklearn.model_selection import train_test_split
 # **TASK: Set X and y variables to the .values of the features and label.**
 
 # In[119]:
+df = df.sample(frac=0.1, random_state=101)
+
+
 X = df.drop('loan_repaid', axis=1).values
 y = df['loan_repaid'].values
+
+
+
+print("Info before model:")
+df.info()
 
 # ----
 # ----
@@ -714,7 +722,7 @@ y = df['loan_repaid'].values
 # In[121]:
 
 
-df = df.sample(frac=0.1, random_state=101)
+# df = df.sample(frac=0.1, random_state=101)
 # print(len(df))
 
 # **TASK: Perform a train/test split with test_size=0.2 and a random_state of 101.**
@@ -763,6 +771,7 @@ model = Sequential()
 
 # In[131]:
 # input layer
+# model.add(tf.keras.layers.Flatten(input_shape=(28, 28)))
 model.add(Dense(78, activation='relu'))
 model.add(Dropout(0.2))
 
@@ -783,7 +792,7 @@ model.compile(loss='binary_crossentropy', optimizer='adam')
 # Optional: add in a batch_size of 256.**
 
 # In[132]:
-# model.fit(x=X_train, y=y_train, epochs=30, batch_size=256, verbose=1, validation_data=(X_test, y_test))
+model.fit(x=X_train, y=y_train, epochs=30, batch_size=256, verbose=1, validation_data=(X_test, y_test))
 
 # **TASK: OPTIONAL: Save your model.**
 
@@ -792,75 +801,44 @@ from tensorflow.keras.models import load_model
 
 # model.save('my_model.h5')
 
-later_model = load_model('my_model.h5')
+# later_model = load_model('my_model.h5')
 
 # # Section 3: Evaluating Model Performance.
 # 
 # **TASK: Plot out the validation loss versus the training loss.**
 
 # In[137]:
+model_loss = pd.DataFrame(model.history.history)
+model_loss[['loss', 'val_loss']].plot()
+# plt.show()
 
-
-# CODE HERE
-
-
-# In[138]:
-
-
-# In[139]:
-
-
-# **TASK: Create predictions from the X_test set and display a classification report and confusion matrix for the X_test set.**
+# **TASK: Create predictions from the X_test set and display a classification report and confusion matrix for the
+# X_test set.**
 
 # In[140]:
+predictions = model.predict_classes(X_test)
 
+from sklearn.metrics import classification_report, confusion_matrix
 
-# CODE HERE
-
-
-# In[141]:
-
-
-# In[142]:
-
-
-# In[143]:
-
-
-# In[144]:
-
+print(classification_report(y_test, predictions))
+print(confusion_matrix(y_test, predictions))
 
 # **TASK: Given the customer below, would you offer this person a loan?**
 
 # In[145]:
-
 
 import random
 
 random.seed(101)
 random_ind = random.randint(0, len(df))
 
-# new_customer = df.drop('loan_repaid', axis=1).iloc[random_ind]
-# new_customer
+new_customer = df.drop('loan_repaid', axis=1).iloc[random_ind].values.reshape(1, 78)
 
-# In[146]:
-
-
-# CODE HERE
-
-
-# In[147]:
-
+model.predict_classes(new_customer)
 
 # **TASK: Now check, did this person actually end up paying back their loan?**
 
 # In[148]:
-
-
-# CODE HERE
-
-
-# In[149]:
-
+print(df.iloc(random_ind)['loan_repaid'])
 
 # # GREAT JOB!
