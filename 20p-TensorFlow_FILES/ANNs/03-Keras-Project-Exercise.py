@@ -834,11 +834,12 @@ random_ind = random.randint(0, len(df))
 
 new_customer = df.drop('loan_repaid', axis=1).iloc[random_ind].values.reshape(1, 78)
 
-model.predict_classes(new_customer)
+print(model.predict_classes(scaler.transform(new_customer)))
 
 # **TASK: Now check, did this person actually end up paying back their loan?**
 
 # In[148]:
-print(df.iloc(random_ind)['loan_repaid'])
+print(df.iloc[random_ind]['loan_repaid'])
+
 
 # # GREAT JOB!
