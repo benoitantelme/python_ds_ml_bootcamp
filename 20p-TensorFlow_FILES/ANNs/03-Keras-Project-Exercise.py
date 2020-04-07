@@ -768,12 +768,12 @@ model = Sequential()
 
 # Remember to compile()
 
-
 # In[131]:
 # input layer
-# model.add(tf.keras.layers.Flatten(input_shape=(28, 28)))
-model.add(Dense(78, activation='relu'))
+model.add(Dense(78, activation='relu', input_shape=(78,)))
 model.add(Dropout(0.2))
+
+# model.add(tf.keras.layers.Flatten(input_shape=(31617, 78)))
 
 # hidden layers
 model.add(Dense(39, activation='relu'))
@@ -792,14 +792,14 @@ model.compile(loss='binary_crossentropy', optimizer='adam')
 # Optional: add in a batch_size of 256.**
 
 # In[132]:
-model.fit(x=X_train, y=y_train, epochs=30, batch_size=256, verbose=1, validation_data=(X_test, y_test))
+model.fit(x=X_train, y=y_train, epochs=60, batch_size=256, verbose=1, validation_data=(X_test, y_test))
 
 # **TASK: OPTIONAL: Save your model.**
 
 # In[134]:
 from tensorflow.keras.models import load_model
 
-# model.save('my_model.h5')
+model.save('my_model.h5')
 
 # later_model = load_model('my_model.h5')
 
@@ -810,7 +810,7 @@ from tensorflow.keras.models import load_model
 # In[137]:
 model_loss = pd.DataFrame(model.history.history)
 model_loss[['loss', 'val_loss']].plot()
-# plt.show()
+plt.show()
 
 # **TASK: Create predictions from the X_test set and display a classification report and confusion matrix for the
 # X_test set.**
